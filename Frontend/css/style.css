@@ -1,0 +1,203 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: sans-serif;
+  background-color: #050508;
+  color: #fff;
+  position: relative;
+}
+
+/* VINHETA ESCURA NAS BORDAS */
+body::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, transparent 60%, rgba(0, 0, 0, 0.85) 100%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* IMAGEM DE FUNDO COM BLUR REDUZIDO (blur de 6px para 2.5px) */
+.bg-ny {
+  position: absolute;
+  top: -5%;
+  left: -5%;
+  width: 110%;
+  height: 110%;
+  background: url('../assets/images/images.jpg') no-repeat center center/cover;
+  filter: grayscale(100%) contrast(110%) brightness(70%) blur(2.5px);
+  will-change: transform;
+  z-index: 1;
+}
+
+.bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 5, 10, 0.35);
+  z-index: 2;
+}
+
+.comic-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+/* HOMEM-ARANHA SUPERIOR */
+.spiderman-hero {
+  position: absolute;
+  bottom: 0;
+  left: 6%;
+  width: 500px;
+  height: 100vh;
+  z-index: 20;
+  display: flex;
+  align-items: flex-end;
+  will-change: transform;
+}
+
+.spiderman-hero img {
+  width: 100%;
+  height: auto;
+  max-height: 110vh;
+  object-fit: contain;
+  object-position: bottom center;
+  transform-origin: bottom center;
+  pointer-events: auto;
+  animation: spiderGlow 4s ease-in-out infinite alternate, spiderFloat 3.5s ease-in-out infinite alternate;
+}
+
+@keyframes spiderFloat {
+  0% { transform: scale(1.2) translateY(14%) translateX(2%); }
+  100% { transform: scale(1.2) translateY(11%) translateX(2%); }
+}
+
+@keyframes spiderGlow {
+  0% {
+    filter: drop-shadow(0 0 30px rgba(230, 36, 41, 0.8)) 
+            drop-shadow(0 0 60px rgba(230, 36, 41, 0.4))
+            drop-shadow(10px 10px 20px rgba(0, 0, 0, 0.95));
+  }
+  100% {
+    filter: drop-shadow(0 0 50px rgba(230, 36, 41, 1)) 
+            drop-shadow(0 0 95px rgba(230, 36, 41, 0.6))
+            drop-shadow(10px 10px 25px rgba(0, 0, 0, 0.95));
+  }
+}
+
+/* BALÃO DE FALA CLASSICO BRANCO */
+.speech-bubble {
+  position: absolute;
+  top: 15%;
+  right: -35%;
+  background-color: #ffffff;
+  color: #000000;
+  font-weight: 900;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  padding: 12px 20px;
+  border: 3px solid #000000;
+  border-radius: 16px;
+  box-shadow: 4px 4px 0px #000000;
+  text-transform: uppercase;
+  z-index: 30;
+  opacity: 0;
+  transform: translateY(10px) scale(0.9);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.speech-bubble::after,
+.speech-bubble::before {
+  content: '';
+  position: absolute;
+  border-style: solid;
+  display: block;
+  width: 0;
+}
+
+.speech-bubble::after {
+  bottom: -12px;
+  left: 24px;
+  border-width: 12px 10px 0 0;
+  border-color: #ffffff transparent transparent transparent;
+  z-index: 2;
+}
+
+.speech-bubble::before {
+  bottom: -17px;
+  left: 22px;
+  border-width: 15px 12px 0 0;
+  border-color: #000000 transparent transparent transparent;
+  z-index: 1;
+}
+
+.spiderman-hero:hover .speech-bubble {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* PAINÉIS DE HQ */
+.panel {
+  position: absolute;
+  background-color: #000;
+  border: 3px solid #ffffff;
+  outline: 2px solid #000000;
+  box-shadow: 6px 6px 0px #000000, 0 10px 20px rgba(0, 0, 0, 0.85);
+  z-index: 10;
+  overflow: hidden;
+  will-change: transform;
+  transition: border-color 0.25s ease, z-index 0.25s ease;
+}
+
+.panel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.panel::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 20%;
+  height: 200%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: rotate(30deg);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.panel:hover::after {
+  animation: flashLight 0.6s ease-in-out;
+}
+
+@keyframes flashLight {
+  0% { left: -60%; opacity: 1; }
+  100% { left: 140%; opacity: 0; }
+}
+
+.panel:hover {
+  border-color: #e62429;
+  z-index: 30;
+}
+
+.panel-1 { top: 3%;   right: 37%; width: 170px; height: 195px; }
+.panel-2 { top: 2%;   right: 21%; width: 190px; height: 135px; }
+.panel-3 { top: 3%;   right: 3%;  width: 165px; height: 210px; }
+.panel-4 { top: 37%;  right: 40%; width: 165px; height: 195px; }
+.panel-5 { top: 34%;  right: 23%; width: 180px; height: 185px; }
+.panel-6 { top: 36%;  right: 5%;  width: 175px; height: 135px; }
+.panel-7 { bottom: 2%; right: 25%; width: 170px; height: 200px; }
+.panel-8 { bottom: 2%; right: 7%;  width: 165px; height: 205px; }
